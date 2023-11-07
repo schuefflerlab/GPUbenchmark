@@ -13,4 +13,4 @@ We want to compare runtimes in the end.
 ### Classification
 - reasonable model like resnet50
 - adjust batch size so it fits on each GPU
-- train on MNIST
+- train on CIFAR10
