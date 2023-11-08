@@ -16,14 +16,14 @@ parser.add_argument(
     "--n", type=int, default=10, help="Number of times to run the training function."
 )
 parser.add_argument(
-    "--epochs", type=int, default=25, help="Number of epochs to train for."
+    "--epochs", type=int, default=50, help="Number of epochs to train for."
 )
 args = parser.parse_args()
 
 # Define your configurations
 configurations = [
-    {"dtype": "fp32", "batch_size": 512},
-    {"dtype": "fp16", "batch_size": 512},
+    {"dtype": "fp32", "batch_size": 512,"epochs": 50},
+    # {"dtype": "fp16", "batch_size": 512},
     # Add more configurations as needed
 ]
 
