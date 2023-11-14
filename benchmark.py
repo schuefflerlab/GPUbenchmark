@@ -7,7 +7,7 @@ import argparse
 # Parse command line arguments
 parser = argparse.ArgumentParser(description="Benchmark training script")
 parser.add_argument(
-    "--device", type=str, default="cuda:0", help="Device to train on. Example: cuda:0"
+    "--device", type=str, default="cuda:2", help="Device to train on. Example: cuda:0"
 )
 parser.add_argument(
     "--device_name", type=str, help="Name of the divce. Example: RTX_3090"

@@ -5,17 +5,18 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 import timeit
 import argparse
+import numpy as np
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description="Train resnet152 model on CIFAR10")
 parser.add_argument(
-    "--device", type=str, default="cuda:0", help="Device to train on. Example: cuda:0"
+    "--device", type=str, default="cuda:3", help="Device to train on. Example: cuda:0"
 )
 parser.add_argument(
-    "--epochs", type=int, default=10, help="Number of epochs to train for."
+    "--epochs", type=int, default=20, help="Number of epochs to train for."
 )
 parser.add_argument(
-    "--batch_size", type=int, default=64, help="Batch size to use for training."
+    "--batch_size", type=int, default=128, help="Batch size to use for training."
 )
 parser.add_argument(
     "--n", type=int, default=10, help="Number of times to run the training function."
@@ -68,6 +69,8 @@ def train_model_closure(
 
 # specify device, look up using nvidia-smi
 device = torch.device(args.device if torch.cuda.is_available() else "cpu")
+device_name = torch.cuda.get_device_name(device=device).split(' ')[-1]
+print(device_name)
 dtype = dtype_mapping[args.dtype]
 # 1. Load the dataset
 dataset = datasets.CIFAR10(
@@ -96,10 +99,22 @@ train_function = train_model_closure(
     dataloader, model, criterion, optimizer, device, num_epochs, dtype
 )
 
-time_taken = timeit.timeit(train_function, number=args.n)
-avg_runtime = time_taken / args.n
-print(f"Avg. runtime in s: {avg_runtime}")
-avg_epoch_time = (time_taken / args.n) / num_epochs
-print(f"Avg. epoch time in s: {avg_epoch_time}")
-samples_per_sec = (len(dataset) * args.n * num_epochs) / time_taken
-print(f"Avg. samples/s: {samples_per_sec/num_epochs}")
+time_ls = []
+
+for i in range(args.n):
+    print(f"running: {i}")
+    time_taken = timeit.timeit(train_function, number=1)
+    print(f"the time it takes: {time_taken}")
+    time_ls.append(time_taken)
+
+time_array = np.array(time_ls)
+pt = 'result/' + device_name + '_run=' + str(args.n) + '.npy'
+np.save(pt, time_array)
+
+# time_taken = timeit.timeit(train_function, number=args.n)
+# avg_runtime = time_taken / args.n
+# print(f"Avg. runtime in s: {avg_runtime}")
+# avg_epoch_time = (time_taken / args.n) / num_epochs
+# print(f"Avg. epoch time in s: {avg_epoch_time}")
+# samples_per_sec = (len(dataset) * args.n * num_epochs) / time_taken
+# print(f"Avg. samples/s: {samples_per_sec/num_epochs}")
