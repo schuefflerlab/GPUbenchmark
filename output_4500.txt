@@ -1,0 +1,3 @@
+Running configuration: 20-fp32-512
+Configuration: 20-fp32-512, Time Taken: 1491.4942137855105 s
+All configurations have been run. Results are saved in 'benchmark_results_A4500.json'.

@@ -1,0 +1,7 @@
+{
+    "20-fp32-512": {
+        "avg_runtime": 1491.4942137855105,
+        "avg_epoch_time": 74.57471068927552,
+        "samples_per_sec": "no sample speed is recorded, because eval is inclusive"
+    }
+}

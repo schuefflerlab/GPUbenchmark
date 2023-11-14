@@ -14,6 +14,11 @@ Install the dependencies using the command:
 ## Data
 Download all of the training, test, and validation HDF5 files from the PatchCamelyon (https://github.com/basveeling/pcam) repository into a separate folder. These will be used for training and testing the CNN. 
 
+## Training on Benchmark
+python benchmark.py --device_name RTX_3090 --n 10
+nohup python benchmark.py --device_name RTX_3090 --n 10 > output_3090.txt
+note: 0,1=RTX3090  2,3=A4500
+
 ## Training
 Run the train.py script with the desired arguments to train a CNN using the PatchCamelyon data. We use Visdom and tensorboardX to visualize the training results in the browser during training. To start the Visdom server locally run `python -m visdom.server` in a separate command prompt and then run `python train.py -args` in another command prompt. Open an internet browser such as Chrome and navigate to the URL printed in the Visdom command prompt (usually `http://localhost:8097` or something similar). 
 

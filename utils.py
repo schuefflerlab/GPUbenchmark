@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-from visdom import Visdom
+#from visdom import Visdom
 
 
 def metrics(prediction, target):
@@ -33,24 +33,24 @@ def loss(prediction, target):
                        + w2 * (1. - target) * torch.log(1. - prediction.clamp_max(.999)))
 
 
-class Writer(object):
-
-    def __init__(self, env_name='main'):
-        self.viz = Visdom()
-        self.env = env_name
-        self.plots = {}
-
-    def plot(self, var_name, split_name, title_name, x, y):
-        if var_name not in self.plots:
-            self.plots[var_name] = self.viz.line(X=np.array([x, x]), Y=np.array([y, y]), env=self.env, opts=dict(
-                legend=[split_name],
-                title=title_name,
-                xlabel='Iterations',
-                ylabel=var_name
-            ))
-        else:
-            self.viz.line(X=np.array([x]), Y=np.array([y]), env=self.env, win=self.plots[var_name], name=split_name,
-                          update='append')
+# class Writer(object):
+#
+#     def __init__(self, env_name='main'):
+#         self.viz = Visdom()
+#         self.env = env_name
+#         self.plots = {}
+#
+#     def plot(self, var_name, split_name, title_name, x, y):
+#         if var_name not in self.plots:
+#             self.plots[var_name] = self.viz.line(X=np.array([x, x]), Y=np.array([y, y]), env=self.env, opts=dict(
+#                 legend=[split_name],
+#                 title=title_name,
+#                 xlabel='Iterations',
+#                 ylabel=var_name
+#             ))
+#         else:
+#             self.viz.line(X=np.array([x]), Y=np.array([y]), env=self.env, win=self.plots[var_name], name=split_name,
+#                           update='append')
 
 
 def sliding_window(image_shape, window_shape, stride=None):
